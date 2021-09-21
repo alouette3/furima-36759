@@ -27,25 +27,22 @@ Things you may want to cover:
 
 ## users テーブル
 
-| Column             | Type      | Options     |
-| ------------------ | --------- | ----------- |
-| nickname           | string    | null: false |
-| email              | string    | null: false |
-| encrypted_password | string    | null: false |
-| family_name        | string    | null: false |
-| first_name         | string    | null: false |
-| family_name_kana   | string    | null: false |
-| first_name_kana    | string    | null: false |
-| birth_day_yy       | integer   | null: false |
-| birth_day_mm       | integer   | null: false |
-| birth_day_dd       | integer   | null: false |
-| phone_number       | integer   | null: false |
-| addresses          | references| null: false, foreign_key: true |
+| Column             | Type      | Options                   |
+| ------------------ | --------- | ------------------------- |
+| nickname           | string    | null: false               |
+| email              | string    | null: false, unique: true |
+| encrypted_password | string    | null: false               |
+| family_name        | string    | null: false               |
+| first_name         | string    | null: false               |
+| family_name_kana   | string    | null: false               |
+| first_name_kana    | string    | null: false               |
+| birth_day          | date      | null: false               |
 
 ### Association
 
 - has_many :items
 - has_one  :address
+- has_many :purchase_histories
 
 ## items テーブル
 
@@ -57,7 +54,7 @@ Things you may want to cover:
 | item_condition_id  | integer    | null: false                    |
 | delivery_charge_id | integer    | null: false                    |
 | delivery_day_id.   | integer    | null: false                    |
-| area_id            | integer    | null: false                    |
+| prefecture_id      | integer    | null: false                    |
 | category_id        | integer    | null: false                    |
 | user               | references | null: false, foreign_key: true |
 
@@ -69,13 +66,26 @@ Things you may want to cover:
 
 | Column       | Type       | Options                        |
 | ------------ | ---------- | ------------------------------ |
-| postal_code  | integer    | null: false                    |
-| prefecture   | string     | null: false                    |
+| postal_code  | string     | null: false                    |
+| prefecture_id| integer    | null: false                    |
 | city         | string     | null: false                    |
 | address      | integer    | null: false                    |
-| building_name| string     | null: false                    |  
+| building_name| string     | null: false                    | 
+| phone_number | string     | null: false                    | 
 | user         | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :user
+
+## purchase_history テーブル
+
+| Column  | Type       | Options                        |
+| ------- | ---------- | ------------------------------ |
+| user    | references | null: false, foreign_key: true |
+| item    | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :user
+- belongs_to :item
