@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
    
-  has_many :purchase_histories
+  # has_many :purchase_histories
   
   validates :nickname, presence: true
   validates :birth_day, presence: true
@@ -14,7 +14,7 @@ class User < ApplicationRecord
     validates :first_name
   end
 
-  with_options presence: true, format: { with: /\A[ァ-ヶ]+\z/, message: '全角カタカナを使用してください' } do
+  with_options presence: true, format: { with: /\A[ァ-ヶー－]+\z/, message: '全角カタカナを使用してください' } do
     validates :family_name_kana
     validates :first_name_kana
   end
