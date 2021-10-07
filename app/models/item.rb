@@ -6,10 +6,17 @@ class Item < ApplicationRecord
   belongs_to :delivery_day
   belongs_to :item_condition
   belongs_to :prefecture
+  
+  has_one :purchase_history
 
   has_one_attached :image
 
-  validates :name, :description, :price, :image, presence: true
+  validates :price, :image, presence: true
+
+  with_options presence: true do
+    validates :name, length: { maximum: 40 }
+    validates :description, length: { maximum: 1000 }
+  end
 
   validates :category_id, numericality: { other_than: 1, message: "can't be blank" }
   validates :delivery_charge_id, numericality: { other_than: 1, message: "can't be blank" }
