@@ -1,7 +1,7 @@
 class PurchaseHistoriesController < ApplicationController
   before_action :authenticate_user!, only: :index
   before_action :set_item, only: [:index, :create]
-  # before_action :move_to_root, only: :index
+  before_action :move_to_root, only: :index
 
   def index
     @purchase_history_address = PurchaseHistoryAddress.new
@@ -29,9 +29,9 @@ class PurchaseHistoriesController < ApplicationController
     @item = Item.find(params[:item_id])
   end
 
-  # def move_to_root
-  #   redirect_to root_path if Item.find(params[:item_id]).purchase_history.present?
-  # end
+  def move_to_root
+    redirect_to root_path if @item.purchase_history.present?
+  end
 
   def pay_item
     Payjp.api_key = ENV['PAYJP_SECRET_KEY']
